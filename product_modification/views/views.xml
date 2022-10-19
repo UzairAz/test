@@ -1,5 +1,6 @@
 <odoo>
     <data>
+        <!-- Inherit Search View -->
         <record id="product_search_by_group_form_view" model="ir.ui.view">
             <field name="name">group.search.form</field>
             <field name="model">product.template</field>
@@ -11,6 +12,8 @@
                 </filter>
             </field>
         </record>
+
+        <!-- Inherit Product Form View -->
         <record id="product_templ_form_inherit_id" model="ir.ui.view">
             <field name="name">Product Temp Form</field>
             <field name="model">product.template</field>

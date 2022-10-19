@@ -1,0 +1,80 @@
+<odoo>
+    <data>
+        <!-- Product Type XML -->
+        <record id="product_type_tree" model="ir.ui.view">
+            <field name="name">Product Type</field>
+            <field name="model">product.type</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="product_type_form" model="ir.ui.view">
+            <field name="name">Product Type</field>
+            <field name="model">product.type</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="product_type_action" model="ir.actions.act_window">
+            <field name="name">Product Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.type</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                </p>
+                <p>
+                </p>
+            </field>
+        </record>
+
+        <!-- Product Segment View -->
+        <record id="product_segment_tree" model="ir.ui.view">
+            <field name="name">Product Segment</field>
+            <field name="model">product.segment</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="product_segment_form" model="ir.ui.view">
+            <field name="name">Product Segment</field>
+            <field name="model">product.segment</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="product_segment_action_id" model="ir.actions.act_window">
+            <field name="name">Product Segment</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.segment</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                </p>
+                <p>
+                </p>
+            </field>
+        </record>
+        <menuitem id="product_type_menu" name="Product Type" parent="stock.menu_stock_inventory_control"
+                  action="product_type_action" sequence="3"/>
+        <menuitem id="product_segment_menu_id" name="Product Segment" parent="stock.menu_stock_inventory_control"
+                  action="product_segment_action_id"
+                  sequence="4"/>
+    </data>
+</odoo>
