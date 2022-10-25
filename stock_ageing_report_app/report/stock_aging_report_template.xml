@@ -169,6 +169,11 @@
                                     </td>
                                     <td rowspan="2" style="padding-left:5px;border: 1px solid black;font-weight:bold;">
                                         <center>
+                                            Frequent
+                                        </center>
+                                    </td>
+                                    <td rowspan="2" style="padding-left:5px;border: 1px solid black;font-weight:bold;">
+                                        <center>
                                             Total Qty
                                         </center>
                                     </td>
@@ -262,7 +267,13 @@
                                         <td style="padding-left:5px;border: 1px solid black;text-align:left;">
                                             <t t-esc="record.get('product_name')"/>
                                         </td>
-
+                                        <td style="padding-left:5px;border: 1px solid black;text-align:left;">
+                                            <t t-if="record.get('frequent_stock')">
+                                                <input type="checkbox" checked="checked"/>
+                                            </t>
+                                            <t t-else="">
+                                            </t>
+                                        </td>
                                         <!-- Sub Total Quantity -->
                                         <t t-set="sub_total"
                                            t-value="col_1_data + col_2_data + col_3_data + col_4_data + col_5_data + col_6_data"/>

@@ -106,11 +106,17 @@ class StockAgingReport(models.AbstractModel):
     def _get_return_out_qty(self, product_id, warehouse_id, start_date, end_date, code, name, is_last, company_id):
         if not is_last:
             self.env.cr.execute(
-                "select sum(product_uom_qty) from stock_move where product_id=%s and state='done' and date>=%s and date<=%s and origin_returned_move_id is not null and location_dest_id in (select id from stock_location where usage='supplier') and warehouse_id=%s and company_id=%s",
+                "select sum(product_uom_qty) from stock_move where product_id=%s"
+                " and state='done' and date>=%s and date<=%s and origin_returned_move_id"
+                " is not null and location_dest_id in (select id from stock_location where"
+                " usage='supplier') and warehouse_id=%s and company_id=%s",
                 (product_id, start_date, end_date, warehouse_id, company_id))
         else:
             self.env.cr.execute(
-                "select sum(product_uom_qty) from stock_move where product_id=%s and state='done' and date>=%s and origin_returned_move_id is not null and location_dest_id in (select id from stock_location where usage='supplier') and warehouse_id=%s and company_id=%s",
+                "select sum(product_uom_qty) from stock_move where product_id=%s"
+                " and state='done' and date>=%s and origin_returned_move_id"
+                " is not null and location_dest_id in (select id from stock_location"
+                " where usage='supplier') and warehouse_id=%s and company_id=%s",
                 (product_id, start_date, warehouse_id, company_id))
         result = self.env.cr.fetchone()[0]
         if result:
@@ -199,12 +205,27 @@ class StockAgingReport(models.AbstractModel):
                     qty_hand_key = col + str(counter)
                     value.update({qty_hand_key: qty_on_hand})
                     counter += 1
+                frequent_stock = self._get_frequent_stock(product_id.id, data.get('start_date'), company_id)
+                value.update({
+                    'frequent_stock': frequent_stock
+                })
                 product_data.append(value)
             lines.append({'product_data': product_data})
         return lines
 
-    # Location
+    # Frequent Stock
+    def _get_frequent_stock(self, product_id, start_date, company_id):
+        domain = [('product_id', '=', product_id), ('state', '=', 'done'), ('company_id', '=', company_id)]
+        end_date = datetime.fromisoformat(start_date) + timedelta(days=7)
+        start_date = datetime.fromisoformat(start_date)
+        picking_domain = [('date_done', '<=', end_date), ('date_done', '>=', start_date), ('state', '=', 'done'),
+                          ('company_id', '=', company_id)]
+        pickings = self.env['stock.picking'].search(picking_domain)
+        delivered_qty = self.env['stock.move'].search(
+            [('picking_id', 'in', pickings.ids), ('product_id', '=', product_id)]).mapped('quantity_done')
+        return True if len(delivered_qty) > 0 else False
 
+    # Location
     def _get_product_location_info(self, product_id, start_date, end_date, is_last, location_id, company_id):
         result = 0.0
         domain_quant = [('product_id', '=', product_id), ('state', '=', 'done'), ('company_id', '=', company_id)]
