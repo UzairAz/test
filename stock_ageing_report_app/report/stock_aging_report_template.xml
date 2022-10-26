@@ -75,85 +75,6 @@
                                         </center>
                                     </td>
                                 </tr>
-                                <tr width="100%" style="font-size:13px;font-family: 'Times New Roman', Times, serif;">
-                                    <td width="33%"
-                                        style="background:#e6e6e6;color:#000000;font-weight:bold;min-height:30px;line-height:20px;font-size:13px;border: 1px solid black;">
-                                        <center>
-                                            Frequent Stock:
-                                        </center>
-                                    </td>
-                                    <td width="33%"
-                                        style="background:#e6e6e6;color:#000000;font-weight:bold;min-height:30px;line-height:20px;font-size:13px;border: 1px solid black;">
-                                        <center>
-                                            Less Frequent stock:
-                                        </center>
-                                    </td>
-                                    <td width="34%"
-                                        style="background:#e6e6e6;color:#000000;font-weight:bold;min-height:30px;line-height:20px;font-size:13px;border: 1px solid black;">
-                                        <center>
-                                            Stuck Up:
-                                        </center>
-                                    </td>
-                                </tr>
-                                <tr width="100%" style="font-size:13px;font-family: 'Times New Roman', Times, serif;">
-                                    <td width="33%"
-                                        style="font-weight:bold;min-height:30px;line-height:20px;font-size:13px;border: 1px solid black;">
-                                        <center>
-                                            <span t-esc="data.get('frequent_stock')"/>
-                                        </center>
-                                    </td>
-                                    <td width="33%"
-                                        style="font-weight:bold;min-height:30px;line-height:20px;font-size:13px;border: 1px solid black;">
-                                        <center>
-                                            <span t-esc="data.get('less_frequent_stock')"/>
-                                        </center>
-                                    </td>
-                                    <td width="34%"
-                                        style="font-weight:bold;min-height:30px;line-height:20px;font-size:13px;border: 1px solid black;">
-                                        <center>
-                                            <span t-esc="data.get('stuck_up')"/>
-                                        </center>
-                                    </td>
-                                </tr>
-                                <tr width="100%" style="font-size:13px;font-family: 'Times New Roman', Times, serif;">
-                                    <td width="33%"
-                                        style="background:#e6e6e6;color:#000000;font-weight:bold;min-height:30px;line-height:20px;font-size:13px;border: 1px solid black;">
-                                        <center>
-                                            Dead:
-                                        </center>
-                                    </td>
-                                    <td width="33%"
-                                        style="background:#e6e6e6;color:#000000;font-weight:bold;min-height:30px;line-height:20px;font-size:13px;border: 1px solid black;">
-                                        <center>
-                                            Branch:
-                                        </center>
-                                    </td>
-                                    <td width="34%"
-                                        style="background:#e6e6e6;color:#000000;font-weight:bold;min-height:30px;line-height:20px;font-size:13px;border: 1px solid black;">
-                                        <center>
-                                        </center>
-                                    </td>
-                                </tr>
-                                <tr width="100%" style="font-size:13px;font-family: 'Times New Roman', Times, serif;">
-                                    <td width="33%"
-                                        style="font-weight:bold;min-height:30px;line-height:20px;font-size:13px;border: 1px solid black;">
-                                        <center>
-                                            <span t-esc="data.get('dead')"/>
-                                        </center>
-                                    </td>
-                                    <td width="33%"
-                                        style="font-weight:bold;min-height:30px;line-height:20px;font-size:13px;border: 1px solid black;">
-                                        <center>
-                                            <span t-esc="data.get('branch')"/>
-                                        </center>
-                                    </td>
-                                    <td width="34%"
-                                        style="font-weight:bold;min-height:30px;line-height:20px;font-size:13px;border: 1px solid black;">
-                                        <center>
-                                        </center>
-                                    </td>
-                                </tr>
-
                             </table>
                             <table width="100%" style="font-size:13px;">
                                 <tr style="min-height:30px;line-height:20px;font-size:13px;" width="100%">
@@ -170,6 +91,21 @@
                                     <td rowspan="2" style="padding-left:5px;border: 1px solid black;font-weight:bold;">
                                         <center>
                                             Frequent
+                                        </center>
+                                    </td>
+                                    <td rowspan="2" style="padding-left:5px;border: 1px solid black;font-weight:bold;">
+                                        <center>
+                                            Less Frequent
+                                        </center>
+                                    </td>
+                                    <td rowspan="2" style="padding-left:5px;border: 1px solid black;font-weight:bold;">
+                                        <center>
+                                            stuck
+                                        </center>
+                                    </td>
+                                    <td rowspan="2" style="padding-left:5px;border: 1px solid black;font-weight:bold;">
+                                        <center>
+                                            Dead
                                         </center>
                                     </td>
                                     <td rowspan="2" style="padding-left:5px;border: 1px solid black;font-weight:bold;">
@@ -269,6 +205,27 @@
                                         </td>
                                         <td style="padding-left:5px;border: 1px solid black;text-align:left;">
                                             <t t-if="record.get('frequent_stock')">
+                                                <input type="checkbox" checked="checked"/>
+                                            </t>
+                                            <t t-else="">
+                                            </t>
+                                        </td>
+                                        <td style="padding-left:5px;border: 1px solid black;text-align:left;">
+                                            <t t-if="record.get('less_frequent')">
+                                                <input type="checkbox" checked="checked"/>
+                                            </t>
+                                            <t t-else="">
+                                            </t>
+                                        </td>
+                                        <td style="padding-left:5px;border: 1px solid black;text-align:left;">
+                                            <t t-if="record.get('stuck')">
+                                                <input type="checkbox" checked="checked"/>
+                                            </t>
+                                            <t t-else="">
+                                            </t>
+                                        </td>
+                                        <td style="padding-left:5px;border: 1px solid black;text-align:left;">
+                                            <t t-if="record.get('dead')">
                                                 <input type="checkbox" checked="checked"/>
                                             </t>
                                             <t t-else="">
@@ -458,6 +415,26 @@
                                     </td>
                                     <td rowspan="2" style="padding-left:5px;border: 1px solid black;font-weight:bold;">
                                         <center>
+                                            Frequent
+                                        </center>
+                                    </td>
+                                    <td rowspan="2" style="padding-left:5px;border: 1px solid black;font-weight:bold;">
+                                        <center>
+                                            Less Frequent
+                                        </center>
+                                    </td>
+                                    <td rowspan="2" style="padding-left:5px;border: 1px solid black;font-weight:bold;">
+                                        <center>
+                                            stuck
+                                        </center>
+                                    </td>
+                                    <td rowspan="2" style="padding-left:5px;border: 1px solid black;font-weight:bold;">
+                                        <center>
+                                            Dead
+                                        </center>
+                                    </td>
+                                    <td rowspan="2" style="padding-left:5px;border: 1px solid black;font-weight:bold;">
+                                        <center>
                                             Total Qty
                                         </center>
                                     </td>
@@ -550,6 +527,34 @@
                                         </td>
                                         <td style="padding-left:5px;border: 1px solid black;text-align:left;">
                                             <t t-esc="record.get('product_name')"/>
+                                        </td>
+                                        <td style="padding-left:5px;border: 1px solid black;text-align:left;">
+                                            <t t-if="record.get('frequent_stock')">
+                                                <input type="checkbox" checked="checked"/>
+                                            </t>
+                                            <t t-else="">
+                                            </t>
+                                        </td>
+                                        <td style="padding-left:5px;border: 1px solid black;text-align:left;">
+                                            <t t-if="record.get('less_frequent')">
+                                                <input type="checkbox" checked="checked"/>
+                                            </t>
+                                            <t t-else="">
+                                            </t>
+                                        </td>
+                                        <td style="padding-left:5px;border: 1px solid black;text-align:left;">
+                                            <t t-if="record.get('stuck')">
+                                                <input type="checkbox" checked="checked"/>
+                                            </t>
+                                            <t t-else="">
+                                            </t>
+                                        </td>
+                                        <td style="padding-left:5px;border: 1px solid black;text-align:left;">
+                                            <t t-if="record.get('dead')">
+                                                <input type="checkbox" checked="checked"/>
+                                            </t>
+                                            <t t-else="">
+                                            </t>
                                         </td>
 
                                         <!-- Sub Total Quantity -->

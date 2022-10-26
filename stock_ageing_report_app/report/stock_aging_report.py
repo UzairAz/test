@@ -205,25 +205,54 @@ class StockAgingReport(models.AbstractModel):
                     qty_hand_key = col + str(counter)
                     value.update({qty_hand_key: qty_on_hand})
                     counter += 1
-                frequent_stock = self._get_frequent_stock(product_id.id, data.get('start_date'), company_id)
+                frequent, less_frequent, stuck, dead = self._get_frequent_stock(product_id.id, data.get('start_date'),
+                                                                                company_id, warehouse)
                 value.update({
-                    'frequent_stock': frequent_stock
+                    'frequent_stock': frequent,
+                    'less_frequent': less_frequent,
+                    'stuck': stuck,
+                    'dead': dead,
                 })
                 product_data.append(value)
             lines.append({'product_data': product_data})
         return lines
 
-    # Frequent Stock
-    def _get_frequent_stock(self, product_id, start_date, company_id):
-        domain = [('product_id', '=', product_id), ('state', '=', 'done'), ('company_id', '=', company_id)]
+    # Stock logic
+    def _get_frequent_stock(self, product_id, start_date, company_id, wareLoc):
         end_date = datetime.fromisoformat(start_date) + timedelta(days=7)
         start_date = datetime.fromisoformat(start_date)
         picking_domain = [('date_done', '<=', end_date), ('date_done', '>=', start_date), ('state', '=', 'done'),
-                          ('company_id', '=', company_id)]
+                          ('company_id', '=', company_id), ('picking_type_code', '=', 'outgoing')]
         pickings = self.env['stock.picking'].search(picking_domain)
-        delivered_qty = self.env['stock.move'].search(
+        frequent = self.env['stock.move'].search(
             [('picking_id', 'in', pickings.ids), ('product_id', '=', product_id)]).mapped('quantity_done')
-        return True if len(delivered_qty) > 0 else False
+        less_frequent = None
+        stuck = None
+        dead = None
+        # logic for less frequent
+        if not frequent:
+            start_date = start_date + timedelta(days=7)
+            end_date = end_date + timedelta(days=7)
+            picking_domain = [('date_done', '<=', end_date), ('date_done', '>=', start_date), ('state', '=', 'done'),
+                              ('company_id', '=', company_id)]
+            pickings = self.env['stock.picking'].search(picking_domain)
+            less_frequent = self.env['stock.move'].search(
+                [('picking_id', 'in', pickings.ids), ('product_id', '=', product_id)]).mapped('quantity_done')
+
+            if not less_frequent:
+                start_date = start_date + timedelta(days=7)
+                end_date = end_date + timedelta(days=7)
+                picking_domain = [('date_done', '<=', end_date), ('date_done', '>=', start_date),
+                                  ('state', '=', 'done'),
+                                  ('company_id', '=', company_id)]
+                pickings = self.env['stock.picking'].search(picking_domain)
+                stuck = self.env['stock.move'].search(
+                    [('picking_id', 'in', pickings.ids), ('product_id', '=', product_id)]).mapped('quantity_done')
+
+                if not stuck:
+                    dead = True
+
+        return True if frequent else False, True if less_frequent else False, True if stuck else False, True if dead else False,
 
     # Location
     def _get_product_location_info(self, product_id, start_date, end_date, is_last, location_id, company_id):
@@ -358,6 +387,14 @@ class StockAgingReport(models.AbstractModel):
                     qty_hand_key = col + str(counter)
                     value.update({qty_hand_key: qty_on_hand})
                     counter += 1
+                frequent, less_frequent, stuck, dead = self._get_frequent_stock(product_id.id, data.get('start_date'),
+                                                                                company_id, location_id)
+                value.update({
+                    'frequent_stock': frequent,
+                    'less_frequent': less_frequent,
+                    'stuck': stuck,
+                    'dead': dead,
+                })
                 product_data.append(value)
             lines.append({'product_data': product_data})
         return lines

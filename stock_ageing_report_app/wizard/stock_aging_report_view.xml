@@ -17,11 +17,11 @@
                     <group>
                         <field name="period_length" required="1"/>
                         <field name="date_from" string="From Date" required="1"/>
-                        <field name="frequent_stock"/>
-                        <field name="less_frequent_stock"/>
-                        <field name="stuck_up"/>
-                        <field name="dead"/>
-                        <field name="branch"/>
+<!--                        <field name="frequent_stock"/>-->
+<!--                        <field name="less_frequent_stock"/>-->
+<!--                        <field name="stuck_up"/>-->
+<!--                        <field name="dead"/>-->
+<!--                        <field name="branch"/>-->
                     </group>
                 </group>
                 <group attrs="{'invisible': [('file', '!=', False)]}">
