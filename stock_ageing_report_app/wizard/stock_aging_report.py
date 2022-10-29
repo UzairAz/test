@@ -480,35 +480,39 @@ class StockAgingReportWizard(models.TransientModel):
 
                 rowscol += 5
 
-                worksheet.merge_range((rowscol + 4), 0, (rowscol + 4), 3, 'Frequent Stock: ', title_format)
-                worksheet.merge_range((rowscol + 5), 0, (rowscol + 5), 3,
-                                      data.get('frequent_stock') if data.get('frequent_stock') else '-', title_format)
-
-                worksheet.merge_range((rowscol + 4), 6, (rowscol + 4), 9, 'Less Frequent stock: ', title_format)
-                worksheet.merge_range((rowscol + 5), 6, (rowscol + 5), 9,
-                                      data.get('less_frequent_stock') if data.get('less_frequent_stock') else '-',
-                                      title_format)
-
-                worksheet.merge_range((rowscol + 4), 12, (rowscol + 4), 15, 'Stuck Up:', title_format)
-                worksheet.merge_range((rowscol + 5), 12, (rowscol + 5), 15,
-                                      data.get('stuck_up') if data.get('stuck_up') else '-', title_format)
-
-                rowscol += 4
-
-                worksheet.merge_range((rowscol + 4), 0, (rowscol + 4), 3, 'Dead:: ', title_format)
-                worksheet.merge_range((rowscol + 5), 0, (rowscol + 5), 3, data.get('dead') if data.get('dead') else '-',
-                                      title_format)
-
-                worksheet.merge_range((rowscol + 4), 6, (rowscol + 4), 9, 'Branch: ', title_format)
-                worksheet.merge_range((rowscol + 5), 6, (rowscol + 5), 9,
-                                      data.get('branch') if data.get('branch') else '-', title_format)
+                # worksheet.merge_range((rowscol + 4), 0, (rowscol + 4), 3, 'Frequent Stock: ', title_format)
+                # worksheet.merge_range((rowscol + 5), 0, (rowscol + 5), 3,
+                #                       data.get('frequent_stock') if data.get('frequent_stock') else '-', title_format)
+                #
+                # worksheet.merge_range((rowscol + 4), 6, (rowscol + 4), 9, 'Less Frequent stock: ', title_format)
+                # worksheet.merge_range((rowscol + 5), 6, (rowscol + 5), 9,
+                #                       data.get('less_frequent_stock') if data.get('less_frequent_stock') else '-',
+                #                       title_format)
+                #
+                # worksheet.merge_range((rowscol + 4), 12, (rowscol + 4), 15, 'Stuck Up:', title_format)
+                # worksheet.merge_range((rowscol + 5), 12, (rowscol + 5), 15,
+                #                       data.get('stuck_up') if data.get('stuck_up') else '-', title_format)
+                #
+                # rowscol += 4
+                #
+                # worksheet.merge_range((rowscol + 4), 0, (rowscol + 4), 3, 'Dead:: ', title_format)
+                # worksheet.merge_range((rowscol + 5), 0, (rowscol + 5), 3, data.get('dead') if data.get('dead') else '-',
+                #                       title_format)
+                #
+                # worksheet.merge_range((rowscol + 4), 6, (rowscol + 4), 9, 'Branch: ', title_format)
+                # worksheet.merge_range((rowscol + 5), 6, (rowscol + 5), 9,
+                #                       data.get('branch') if data.get('branch') else '-', title_format)
 
                 # Report Content
                 worksheet.write((rowscol + 7), 0, 'Code', cell_wrap_format_bold)
                 worksheet.write((rowscol + 7), 1, 'Product Name', cell_wrap_format_bold)
-                worksheet.write((rowscol + 7), 2, 'Total Qty', cell_wrap_format_bold)
-                worksheet.write((rowscol + 7), 3, 'Total Value', cell_wrap_format_bold)
-                col = 4
+                worksheet.write((rowscol + 7), 2, 'Frequent', cell_wrap_format_bold)
+                worksheet.write((rowscol + 7), 3, 'Less Frequent', cell_wrap_format_bold)
+                worksheet.write((rowscol + 7), 4, 'Stuck', cell_wrap_format_bold)
+                worksheet.write((rowscol + 7), 5, 'Dead', cell_wrap_format_bold)
+                worksheet.write((rowscol + 7), 6, 'Total Qty', cell_wrap_format_bold)
+                worksheet.write((rowscol + 7), 7, 'Total Value', cell_wrap_format_bold)
+                col = 8
                 for value in self.get_columns(data):
                     colss = col + 1
                     worksheet.merge_range((rowscol + 7), col, (rowscol + 7), colss, str(value), title_format)
@@ -517,10 +521,10 @@ class StockAgingReportWizard(models.TransientModel):
                 worksheet.write((rowscol + 8), 1, '', cell_wrap_format_bold)
                 worksheet.write((rowscol + 8), 2, '', cell_wrap_format_bold)
                 worksheet.write((rowscol + 8), 3, '', cell_wrap_format_bold)
-                worksheet.write((rowscol + 8), 4, 'Qty', cell_wrap_format_bold)
-                worksheet.write((rowscol + 8), 5, 'Value', cell_wrap_format_bold)
-                worksheet.write((rowscol + 8), 6, 'Qty', cell_wrap_format_bold)
-                worksheet.write((rowscol + 8), 7, 'Value', cell_wrap_format_bold)
+                worksheet.write((rowscol + 8), 4, '', cell_wrap_format_bold)
+                worksheet.write((rowscol + 8), 5, '', cell_wrap_format_bold)
+                worksheet.write((rowscol + 8), 6, '', cell_wrap_format_bold)
+                worksheet.write((rowscol + 8), 7, '', cell_wrap_format_bold)
                 worksheet.write((rowscol + 8), 8, 'Qty', cell_wrap_format_bold)
                 worksheet.write((rowscol + 8), 9, 'Value', cell_wrap_format_bold)
                 worksheet.write((rowscol + 8), 10, 'Qty', cell_wrap_format_bold)
@@ -529,6 +533,10 @@ class StockAgingReportWizard(models.TransientModel):
                 worksheet.write((rowscol + 8), 13, 'Value', cell_wrap_format_bold)
                 worksheet.write((rowscol + 8), 14, 'Qty', cell_wrap_format_bold)
                 worksheet.write((rowscol + 8), 15, 'Value', cell_wrap_format_bold)
+                worksheet.write((rowscol + 8), 16, 'Qty', cell_wrap_format_bold)
+                worksheet.write((rowscol + 8), 17, 'Value', cell_wrap_format_bold)
+                worksheet.write((rowscol + 8), 18, 'Qty', cell_wrap_format_bold)
+                worksheet.write((rowscol + 8), 19, 'Value', cell_wrap_format_bold)
                 rows = (rowscol + 9)
                 for records in self.get_warehouse_details(data, warehouse):
                     for record in records.get('product_data'):
@@ -551,22 +559,26 @@ class StockAgingReportWizard(models.TransientModel):
 
                         worksheet.write(rows, 0, record.get('product_code'), cell_wrap_format)
                         worksheet.write(rows, 1, record.get('product_name'), cell_wrap_format)
+                        worksheet.write(rows, 2, 'Yes' if record.get('frequent_stock') else None, cell_wrap_format)
+                        worksheet.write(rows, 3, 'Yes' if record.get('less_frequent') else None, cell_wrap_format)
+                        worksheet.write(rows, 4, 'Yes' if record.get('stuck') else None, cell_wrap_format)
+                        worksheet.write(rows, 5, 'Yes' if record.get('dead') else None, cell_wrap_format)
 
-                        worksheet.write(rows, 2, str('%.2f' % sub_total), cell_wrap_format_val)
-                        worksheet.write(rows, 3, str('%.2f' % total_cost), cell_wrap_format_right)
+                        worksheet.write(rows, 6, str('%.2f' % sub_total), cell_wrap_format_val)
+                        worksheet.write(rows, 7, str('%.2f' % total_cost), cell_wrap_format_right)
 
-                        worksheet.write(rows, 4, str('%.1f' % col_1_data), cell_wrap_format_amount)
-                        worksheet.write(rows, 5, str('%.2f' % col_1_data_value), cell_wrap_format_amount_val)
-                        worksheet.write(rows, 6, str('%.1f' % col_2_data), cell_wrap_format_amount)
-                        worksheet.write(rows, 7, str('%.2f' % col_2_data_value), cell_wrap_format_amount_val)
-                        worksheet.write(rows, 8, str('%.1f' % col_3_data), cell_wrap_format_amount)
-                        worksheet.write(rows, 9, str('%.2f' % col_3_data_value), cell_wrap_format_amount_val)
-                        worksheet.write(rows, 10, str('%.1f' % col_4_data), cell_wrap_format_amount)
-                        worksheet.write(rows, 11, str('%.2f' % col_4_data_value), cell_wrap_format_amount_val)
-                        worksheet.write(rows, 12, str('%.1f' % col_5_data), cell_wrap_format_amount)
-                        worksheet.write(rows, 13, str('%.2f' % col_5_data_value), cell_wrap_format_amount_val)
-                        worksheet.write(rows, 14, str('%.1f' % col_6_data), cell_wrap_format_amount)
-                        worksheet.write(rows, 15, str('%.2f' % col_6_data_value), cell_wrap_format_amount_val)
+                        worksheet.write(rows, 8, str('%.1f' % col_1_data), cell_wrap_format_amount)
+                        worksheet.write(rows, 9, str('%.2f' % col_1_data_value), cell_wrap_format_amount_val)
+                        worksheet.write(rows, 10, str('%.1f' % col_2_data), cell_wrap_format_amount)
+                        worksheet.write(rows, 11, str('%.2f' % col_2_data_value), cell_wrap_format_amount_val)
+                        worksheet.write(rows, 12, str('%.1f' % col_3_data), cell_wrap_format_amount)
+                        worksheet.write(rows, 13, str('%.2f' % col_3_data_value), cell_wrap_format_amount_val)
+                        worksheet.write(rows, 14, str('%.1f' % col_4_data), cell_wrap_format_amount)
+                        worksheet.write(rows, 15, str('%.2f' % col_4_data_value), cell_wrap_format_amount_val)
+                        worksheet.write(rows, 16, str('%.1f' % col_5_data), cell_wrap_format_amount)
+                        worksheet.write(rows, 17, str('%.2f' % col_5_data_value), cell_wrap_format_amount_val)
+                        worksheet.write(rows, 18, str('%.1f' % col_6_data), cell_wrap_format_amount)
+                        worksheet.write(rows, 19, str('%.2f' % col_6_data_value), cell_wrap_format_amount_val)
                         rows = rows + 1
                     rows = rows
                 rowscol = rows + 2
@@ -592,9 +604,13 @@ class StockAgingReportWizard(models.TransientModel):
                 # Report Content
                 worksheet.write((rowscol + 7), 0, 'Code', cell_wrap_format_bold)
                 worksheet.write((rowscol + 7), 1, 'Product Name', cell_wrap_format_bold)
-                worksheet.write((rowscol + 7), 2, 'Total Qty', cell_wrap_format_bold)
-                worksheet.write((rowscol + 7), 3, 'Total Value', cell_wrap_format_bold)
-                col = 4
+                worksheet.write((rowscol + 7), 2, 'Frequent', cell_wrap_format_bold)
+                worksheet.write((rowscol + 7), 3, 'Less Frequent', cell_wrap_format_bold)
+                worksheet.write((rowscol + 7), 4, 'Stuck', cell_wrap_format_bold)
+                worksheet.write((rowscol + 7), 5, 'Dead', cell_wrap_format_bold)
+                worksheet.write((rowscol + 7), 6, 'Total Qty', cell_wrap_format_bold)
+                worksheet.write((rowscol + 7), 7, 'Total Value', cell_wrap_format_bold)
+                col = 8
                 for value in self.get_columns(data):
                     colss = col + 1
                     worksheet.merge_range((rowscol + 7), col, (rowscol + 7), colss, str(value), title_format)
@@ -603,10 +619,10 @@ class StockAgingReportWizard(models.TransientModel):
                 worksheet.write((rowscol + 8), 1, '', cell_wrap_format_bold)
                 worksheet.write((rowscol + 8), 2, '', cell_wrap_format_bold)
                 worksheet.write((rowscol + 8), 3, '', cell_wrap_format_bold)
-                worksheet.write((rowscol + 8), 4, 'Qty', cell_wrap_format_bold)
-                worksheet.write((rowscol + 8), 5, 'Value', cell_wrap_format_bold)
-                worksheet.write((rowscol + 8), 6, 'Qty', cell_wrap_format_bold)
-                worksheet.write((rowscol + 8), 7, 'Value', cell_wrap_format_bold)
+                worksheet.write((rowscol + 8), 4, '', cell_wrap_format_bold)
+                worksheet.write((rowscol + 8), 5, '', cell_wrap_format_bold)
+                worksheet.write((rowscol + 8), 6, '', cell_wrap_format_bold)
+                worksheet.write((rowscol + 8), 7, '', cell_wrap_format_bold)
                 worksheet.write((rowscol + 8), 8, 'Qty', cell_wrap_format_bold)
                 worksheet.write((rowscol + 8), 9, 'Value', cell_wrap_format_bold)
                 worksheet.write((rowscol + 8), 10, 'Qty', cell_wrap_format_bold)
@@ -615,6 +631,10 @@ class StockAgingReportWizard(models.TransientModel):
                 worksheet.write((rowscol + 8), 13, 'Value', cell_wrap_format_bold)
                 worksheet.write((rowscol + 8), 14, 'Qty', cell_wrap_format_bold)
                 worksheet.write((rowscol + 8), 15, 'Value', cell_wrap_format_bold)
+                worksheet.write((rowscol + 8), 16, 'Qty', cell_wrap_format_bold)
+                worksheet.write((rowscol + 8), 17, 'Value', cell_wrap_format_bold)
+                worksheet.write((rowscol + 8), 18, 'Qty', cell_wrap_format_bold)
+                worksheet.write((rowscol + 8), 19, 'Value', cell_wrap_format_bold)
                 rows = (rowscol + 9)
                 for records in self.get_location_details(data, location):
                     for record in records.get('product_data'):
@@ -637,22 +657,26 @@ class StockAgingReportWizard(models.TransientModel):
 
                         worksheet.write(rows, 0, record.get('product_code'), cell_wrap_format)
                         worksheet.write(rows, 1, record.get('product_name'), cell_wrap_format)
+                        worksheet.write(rows, 2, 'Yes' if record.get('frequent_stock') else None, cell_wrap_format)
+                        worksheet.write(rows, 3, 'Yes' if record.get('less_frequent') else None, cell_wrap_format)
+                        worksheet.write(rows, 4, 'Yes' if record.get('stuck') else None, cell_wrap_format)
+                        worksheet.write(rows, 5, 'Yes' if record.get('dead') else None, cell_wrap_format)
 
-                        worksheet.write(rows, 2, str('%.2f' % sub_total), cell_wrap_format_val)
-                        worksheet.write(rows, 3, str('%.2f' % total_cost), cell_wrap_format_right)
+                        worksheet.write(rows, 6, str('%.2f' % sub_total), cell_wrap_format_val)
+                        worksheet.write(rows, 7, str('%.2f' % total_cost), cell_wrap_format_right)
 
-                        worksheet.write(rows, 4, str('%.1f' % col_1_data), cell_wrap_format_amount)
-                        worksheet.write(rows, 5, str('%.2f' % col_1_data_value), cell_wrap_format_amount_val)
-                        worksheet.write(rows, 6, str('%.1f' % col_2_data), cell_wrap_format_amount)
-                        worksheet.write(rows, 7, str('%.2f' % col_2_data_value), cell_wrap_format_amount_val)
-                        worksheet.write(rows, 8, str('%.1f' % col_3_data), cell_wrap_format_amount)
-                        worksheet.write(rows, 9, str('%.2f' % col_3_data_value), cell_wrap_format_amount_val)
-                        worksheet.write(rows, 10, str('%.1f' % col_4_data), cell_wrap_format_amount)
-                        worksheet.write(rows, 11, str('%.2f' % col_4_data_value), cell_wrap_format_amount_val)
-                        worksheet.write(rows, 12, str('%.1f' % col_5_data), cell_wrap_format_amount)
-                        worksheet.write(rows, 13, str('%.2f' % col_5_data_value), cell_wrap_format_amount_val)
-                        worksheet.write(rows, 14, str('%.1f' % col_6_data), cell_wrap_format_amount)
-                        worksheet.write(rows, 15, str('%.2f' % col_6_data_value), cell_wrap_format_amount_val)
+                        worksheet.write(rows, 8, str('%.1f' % col_1_data), cell_wrap_format_amount)
+                        worksheet.write(rows, 9, str('%.2f' % col_1_data_value), cell_wrap_format_amount_val)
+                        worksheet.write(rows, 10, str('%.1f' % col_2_data), cell_wrap_format_amount)
+                        worksheet.write(rows, 11, str('%.2f' % col_2_data_value), cell_wrap_format_amount_val)
+                        worksheet.write(rows, 12, str('%.1f' % col_3_data), cell_wrap_format_amount)
+                        worksheet.write(rows, 13, str('%.2f' % col_3_data_value), cell_wrap_format_amount_val)
+                        worksheet.write(rows, 14, str('%.1f' % col_4_data), cell_wrap_format_amount)
+                        worksheet.write(rows, 15, str('%.2f' % col_4_data_value), cell_wrap_format_amount_val)
+                        worksheet.write(rows, 16, str('%.1f' % col_5_data), cell_wrap_format_amount)
+                        worksheet.write(rows, 17, str('%.2f' % col_5_data_value), cell_wrap_format_amount_val)
+                        worksheet.write(rows, 18, str('%.1f' % col_6_data), cell_wrap_format_amount)
+                        worksheet.write(rows, 19, str('%.2f' % col_6_data_value), cell_wrap_format_amount_val)
                         rows = rows + 1
                     rows = rows
                 rowscol = rows + 2
