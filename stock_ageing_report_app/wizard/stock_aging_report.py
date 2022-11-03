@@ -212,9 +212,17 @@ class StockAgingReportWizard(models.TransientModel):
             product_ids = data.get('product_ids')
             company = data.get('company_id')
             if filter_type == 'category':
-                product_ids = self.env['product.product'].search([('categ_id', 'in', category_ids.ids)])
+                if category_ids:
+                    product_ids = self.env['product.product'].search([('categ_id', 'in', category_ids.ids)])
+                else:
+                    product_ids = self.env['product.product'].search([])
+
             else:
-                product_ids = self.env['product.product'].search([('id', 'in', product_ids.ids)])
+                if product_ids:
+                    product_ids = self.env['product.product'].search([('id', 'in', product_ids.ids)])
+                else:
+                    product_ids = self.env['product.product'].search([])
+
             product_data = []
             for product_id in product_ids:
                 value = {}

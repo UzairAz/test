@@ -10,18 +10,18 @@
                         <field name="company_id" required="1"/>
                         <field name="filter_type" widget="radio" options="{'horizontal': true}" required="1"/>
                         <field name="product_ids" widget="many2many_tags" string="Product"
-                               attrs="{'invisible': [('filter_type', '!=', 'product')], 'required': [('filter_type', '==', 'product')]}"/>
+                               attrs="{'invisible': [('filter_type', '!=', 'product')]}"/>
                         <field name="product_categ_ids" widget="many2many_tags" string="Category"
-                               attrs="{'invisible': [('filter_type', '!=', 'category')], 'required': [('filter_type', '==', 'category')]}"/>
+                               attrs="{'invisible': [('filter_type', '!=', 'category')]}"/>
                     </group>
                     <group>
                         <field name="period_length" required="1"/>
                         <field name="date_from" string="From Date" required="1"/>
-<!--                        <field name="frequent_stock"/>-->
-<!--                        <field name="less_frequent_stock"/>-->
-<!--                        <field name="stuck_up"/>-->
-<!--                        <field name="dead"/>-->
-<!--                        <field name="branch"/>-->
+                        <!--                        <field name="frequent_stock"/>-->
+                        <!--                        <field name="less_frequent_stock"/>-->
+                        <!--                        <field name="stuck_up"/>-->
+                        <!--                        <field name="dead"/>-->
+                        <!--                        <field name="branch"/>-->
                     </group>
                 </group>
                 <group attrs="{'invisible': [('file', '!=', False)]}">
