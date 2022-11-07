@@ -13,9 +13,8 @@ class InheritStockQuant(models.Model):
     def _get_warehouse_id(self):
         self.warehouse_id = self.location_id.warehouse_id.ids[0] if len(
             self.location_id.warehouse_id.ids) > 1 else self.location_id.warehouse_id.id
-        # self.warehouse_id = self.location_id.warehouse_id.ids[0] if len(
-        #     self.location_id.warehouse_id.ids) > 1 else self.location_id.warehouse_id.id
-        self.get_warehouse = 1
+        self.get_warehouse = self.location_id.warehouse_id.ids[0] if len(
+            self.location_id.warehouse_id.ids) > 1 else self.location_id.warehouse_id.id
 
     @api.model
     def _get_inventory_fields_create(self):
