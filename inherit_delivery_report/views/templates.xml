@@ -1,6 +1,10 @@
 <odoo>
     <data>
         <template inherit_id="stock.report_delivery_document" id="report_delivery_document">
+            <xpath expr="//table[@name='stock_move_line_table']//th[1]" position="replace">
+                <th></th>
+            </xpath>
+
             <xpath expr="//table[@name='stock_move_line_table']//th[1]" position="after">
                 <th name="th_sml_product">
                     <strong>Internal Reference</strong>
@@ -11,6 +15,9 @@
             </xpath>
         </template>
         <template inherit_id="stock.stock_report_delivery_aggregated_move_lines" id="report_has_serial_move_line">
+            <xpath expr="//td[1]" position="replace">
+                <td></td>
+            </xpath>
             <xpath expr="//td[1]" position="after">
                 <td>
                     <span t-esc="aggregated_lines[line]['product'].default_code"/>
