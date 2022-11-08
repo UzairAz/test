@@ -1,0 +1,171 @@
+<odoo>
+    <data>
+        <template id="sales_report_customer">
+            <t t-call="web.html_container">
+                <t t-call="web.internal_layout">
+                    <t t-foreach="docs" t-as="o">
+                        <style>
+                            .font-bold{font-weight:bold;}
+                            .padding{padding-top:3px;padding-bottom:3px;}
+                            .grey_border{border: 1px solid grey;}
+                            .bold{font-weight: bold;}
+                            .bordered{border: 1px solid black;background-color: grey;color: white; font-weight: bold;}
+                            .table_body td {border-style: none;border: none;}
+                            .no-style td{border: none;}
+                            <!--                        .bg_black_cl_white th{background: black; color: white;}-->
+                        </style>
+                        <!-- Top Information-->
+                        <div class="page">
+                            <div class="oe_structure"/>
+                            <div class="container text-center font-bold">
+                                <t t-if="report_for=='customer'">
+                                    <h4>SALES BY CUSTOMER REPORT</h4>
+                                </t>
+                                <t t-else="">
+                                    <h4>SALES BY SALES PERSON REPORT</h4>
+                                </t>
+                                <h4>
+                                    <span t-esc="date_from"/>
+                                    to
+                                    <span t-esc="date_to"/>
+                                </h4>
+                            </div>
+                            <br/>
+                            <table width="100%">
+                                <thead>
+                                    <tr class="bg_black_cl_white">
+                                        <th width="5%" class="padding grey_border text-center">#</th>
+                                        <th with="25%" class="padding grey_border pl-1">Product</th>
+                                        <th width="10%" class="text-center padding grey_border">Rate</th>
+                                        <th width="10%" class="text-center padding grey_border">Quantity</th>
+                                        <th width="20%" class="text-center padding grey_border">UnVAT Amount</th>
+                                        <th width="15%" class="text-center padding grey_border">VAT Amount</th>
+                                        <th width="15%" class="text-center padding grey_border">Total Amount</th>
+                                    </tr>
+                                </thead>
+                                <t t-foreach="data" t-as="da">
+                                    <t t-set="first" t-value="0"/>
+                                    <t t-set="untaxed_grand_total" t-value="0"/>
+                                    <t t-set="tax_grand_total" t-value="0"/>
+                                    <t t-set="total_grand_total" t-value="0"/>
+                                    <t t-foreach="da['invoices']" t-as="inv">
+                                        <tbody class="table_body">
+                                            <t t-set="untaxed_amount" t-value="0"/>
+                                            <t t-set="taxed_amount" t-value="0"/>
+                                            <t t-set="total_amount" t-value="0"/>
+                                            <t t-set="serial" t-value="0"/>
+                                            <tr>
+                                                <t t-if="first==0">
+                                                    <tr>
+                                                        <t t-if="report_for=='customer'">
+                                                            <td colspan="7" class="bordered">
+                                                                <span t-esc="da['customer']"/>
+                                                            </td>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <td colspan="7" class="bordered">Sales Person:
+                                                                <span t-esc="da['sale_person']"/>
+                                                            </td>
+                                                        </t>
+                                                    </tr>
+                                                    <t t-set="first" t-value="first+1"/>
+                                                </t>
+                                                <t t-if="report_for=='customer'">
+                                                    <td class="bold" colspan="7">
+                                                        <span t-esc="inv['invoice'].name"/>
+                                                    </td>
+                                                </t>
+                                                <t t-else="">
+                                                    <td class="bold" colspan="7">
+                                                        <span t-esc="inv['invoice'].name"/>-(<span
+                                                            t-esc="da['customer']"/>)
+                                                    </td>
+                                                </t>
+                                            </tr>
+                                            <t t-foreach="inv['lines']" t-as="line">
+                                                <tr>
+                                                    <t t-set="serial" t-value="serial+1"/>
+                                                    <td class="text-center padding grey_border text-center">
+                                                        <span t-esc="serial"/>
+                                                    </td>
+                                                    <td class="padding grey_border pl-1">
+                                                        <span t-esc="line['product_id_name']"/>
+                                                    </td>
+                                                    <td class="text-center padding grey_border text-center">
+                                                        <span t-esc="line['price_unit']"/>
+                                                    </td>
+                                                    <td class="text-center padding grey_border text-center">
+                                                        <span t-esc="line['product_qty']"/>
+                                                    </td>
+                                                    <td class="text-center padding grey_border text-center">
+                                                        <span t-esc="line['price_subtotal']"/>
+                                                    </td>
+                                                    <td class="text-center padding grey_border text-center">
+                                                        <span t-esc="line['tax_amount']"/>
+                                                    </td>
+                                                    <td class="text-center padding grey_border text-center">
+                                                        <span t-esc="line['price_subtotal']+line['tax_amount']"/>
+                                                    </td>
+                                                    <t t-set="untaxed_amount"
+                                                       t-value="untaxed_amount+line['price_subtotal']"/>
+                                                    <t t-set="taxed_amount" t-value="taxed_amount+line['tax_amount']"/>
+                                                    <t t-set="total_amount"
+                                                       t-value="total_amount+line['price_subtotal']+line['tax_amount']"/>
+
+                                                </tr>
+                                            </t>
+                                            <tr class="bold">
+                                                <td width="" colspan="4"
+                                                    class="text-right pr-1 padding grey_border">
+                                                    Invoice Total
+                                                </td>
+                                                <td class="text-center padding grey_border">
+                                                    <span t-esc="untaxed_amount"/>
+                                                    <t t-set="untaxed_grand_total"
+                                                       t-value="untaxed_grand_total+untaxed_amount"/>
+                                                </td>
+                                                <td class="text-center padding grey_border">
+                                                    <span t-esc="taxed_amount"/>
+                                                    <t t-set="tax_grand_total" t-value="tax_grand_total+taxed_amount"/>
+                                                </td>
+                                                <td class="text-center padding grey_border">
+                                                    <span t-esc="total_amount"/>
+                                                    <t t-set="total_grand_total"
+                                                       t-value="total_grand_total+total_amount"/>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </t>
+                                    <tr class="bold mt-4 mb-4 no-style">
+                                        <t t-if="report_for=='customer'">
+                                            <td width="" colspan="4"
+                                                class="text-right pr-1 padding grey_border">
+                                                Customer Total
+                                            </td>
+                                        </t>
+                                        <t t-else="">
+                                            <td width="" colspan="4"
+                                                class="text-right pr-1 padding grey_border">
+                                                Salesman Total
+                                            </td>
+                                        </t>
+                                        <td class="text-center padding grey_border">
+                                            <span t-esc="untaxed_grand_total"/>
+                                        </td>
+                                        <td class="text-center padding grey_border">
+                                            <span t-esc="untaxed_grand_total"/>
+                                        </td>
+                                        <td class="text-center padding grey_border">
+                                            <span t-esc="total_grand_total"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                            <div class="oe_structure"/>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

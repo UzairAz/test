@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+        <menuitem id="sale_report_action" name="Sale Report" parent="sale.menu_sale_report"
+                  action="sales_report_by_customer.create_sale_report_wizard" sequence="2"/>
+        <report
+                id="sale_report_customer"
+                model="sale.order"
+                report_type="qweb-pdf"
+                string="Sales Report"
+                name="sales_report_by_customer.sales_report_customer"
+                file="sales_report_by_customer.sales_report_customer"
+                menu="False"
+        />
+
+    </data>
+</odoo>
