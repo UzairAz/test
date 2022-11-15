@@ -29,8 +29,8 @@ class StockAgingReportWizard(models.TransientModel):
     location_ids = fields.Many2many('stock.location', string="Location")
     product_ids = fields.Many2many('product.product', string="Product")
     product_categ_ids = fields.Many2many('product.category', string="Category")
-    product_type = fields.Many2many('product.type', string="Type")
-    product_segment = fields.Many2many('product.segment', string="Segment")
+    product_type = fields.Many2many('product.type', 'partner_id', string="Type")
+    product_segment = fields.Many2many('product.segment', 'user_id', string="Segment")
     filter_type = fields.Selection(
         [('product', 'Product'), ('category', 'Category'), ("type", 'Type'), ('segment', 'Segment')], default='product',
         string='Filter By')
