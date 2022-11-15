@@ -1,0 +1,31 @@
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="user_inherit_id" model="ir.ui.view">
+            <field name="name">User Inherit</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="user_id"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="internal_inherit_id" model="ir.ui.view">
+            <field name="name">Users Inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="user_id"/>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>
